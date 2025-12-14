@@ -2,6 +2,59 @@
 
 Predict cryptocurrency prices using **Machine Learning** and **Python**.  
 This project fetches data from [Alpha Vantage](https://www.alphavantage.co/documentation/#digital-currency) and predicts monthly and quarterly price trends.
+## 🗂 Project Structure
+
+The project is organized in a modular and scalable way to support data collection, preprocessing, modeling, evaluation, and visualization.
+
+```text
+crypto-prediction/
+│
+├── data/
+│   ├── raw/                    # Raw data fetched from Alpha Vantage
+│   │   └── btc_monthly.json
+│   │
+│   ├── processed/              # Cleaned and feature-engineered datasets
+│   │   └── btc_monthly.csv
+│
+├── notebooks/                  # Jupyter notebooks for exploration & experiments
+│   ├── 01_data_exploration.ipynb
+│   ├── 02_feature_engineering.ipynb
+│   └── 03_model_experiments.ipynb
+│
+├── src/
+│   ├── data/
+│   │   ├── fetch_data.py        # API calls to Alpha Vantage
+│   │   └── preprocess.py       # Data cleaning & feature engineering
+│   │
+│   ├── features/
+│   │   └── technical_indicators.py  # MA, RSI, Bollinger Bands, etc.
+│   │
+│   ├── models/
+│   │   ├── train_ml.py          # Train traditional ML models
+│   │   ├── train_lstm.py        # Train deep learning models (LSTM/GRU)
+│   │   └── predict.py           # Generate predictions
+│   │
+│   ├── evaluation/
+│   │   └── metrics.py           # MAE, RMSE, MAPE, directional accuracy
+│   │
+│   ├── visualization/
+│   │   └── plot_results.py      # Price & prediction visualizations
+│   │
+│   └── utils/
+│       ├── config.py            # Global configuration & parameters
+│       └── helpers.py           # Utility functions
+│
+├── configs/
+│   └── model_config.yaml        # Model hyperparameters
+│
+├── tests/
+│   └── test_preprocessing.py    # Unit tests
+│
+├── .gitignore
+├── requirements.txt             # Python dependencies
+├── README.md
+└── LICENSE
+```
 
 ---
 
