@@ -23,25 +23,25 @@ crypto-prediction/
 │
 ├── src/
 │   ├── data/
-│   │   ├── fetch_data.py        # API calls to Alpha Vantage
-│   │   └── preprocess.py       # Data cleaning & feature engineering
+│   │   ├── fetch_data.py        # API calls to Alpha Vantage wrote
+│   │   └── preprocess.py       # Data cleaning & feature engineering wrote
 │   │
 │   ├── features/
-│   │   └── technical_indicators.py  # MA, RSI, Bollinger Bands, etc.
+│   │   └── technical_indicators.py  # MA, RSI, Bollinger Bands, etc. wrote
 │   │
 │   ├── models/
-│   │   ├── train_ml.py          # Train traditional ML models
+│   │   ├── train_ml.py          # Train traditional ML models wrote
 │   │   ├── train_lstm.py        # Train deep learning models (LSTM/GRU)
-│   │   └── predict.py           # Generate predictions
+│   │   └── predict.py           # Generate predictions wrote
 │   │
 │   ├── evaluation/
-│   │   └── metrics.py           # MAE, RMSE, MAPE, directional accuracy
+│   │   └── metrics.py           # MAE, RMSE, MAPE, directional accuracy wrote
 │   │
 │   ├── visualization/
-│   │   └── plot_results.py      # Price & prediction visualizations
+│   │   └── plot_results.py      # Price & prediction visualizations wrote
 │   │
 │   └── utils/
-│       ├── config.py            # Global configuration & parameters
+│       ├── config.py            # Global configuration & parameters wrote
 │       └── helpers.py           # Utility functions
 │
 ├── configs/
