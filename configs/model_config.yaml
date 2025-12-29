@@ -1,0 +1,9 @@
+random_forest:
+  n_estimators: 200
+  max_depth: 8
+  random_state: 42
+
+lstm:
+  window_size: 12
+  epochs: 50
+  batch_size: 16
