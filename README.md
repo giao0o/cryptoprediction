@@ -55,7 +55,20 @@ crypto-prediction/
 ├── README.md
 └── LICENSE
 ```
+To run this project on a Mac with M1 chip, it is recommended to create a new conda environment. **Do not install dependencies in the base environment.**
 
+### Create and activate the conda environment
+
+```bash
+conda create -n tf-m1 python=3.10 -y
+conda activate tf-m1
+pip install --upgrade pip
+pip install -r requirements.txt
+```
+### Activate the conda environment
+```bash
+conda activate tf-m1
+```
 ---
 
 ## 📚 Table of Contents
