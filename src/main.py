@@ -24,6 +24,13 @@ def main():
     print("Step 3: Training model...")
     model, X_test, y_test, preds = train_random_forest()
 
+    from src.evaluation.metrics import rmse, mape, directional_accuracy
+    print(f"RMSE: {rmse(y_test.values, preds):.2f}")
+    print(f"MAPE: {mape(y_test.values, preds):.2f}%")
+    # Directional accuracy needs at least 2 points
+    if len(y_test) > 1:
+        print(f"Directional Accuracy: {directional_accuracy(y_test.values, preds):.2%}")
+
     print("Step 4: Visualizing results...")
     plot_actual_vs_predicted(
         dates=y_test.index,

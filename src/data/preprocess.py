@@ -2,8 +2,8 @@
 Data cleaning and feature engineering.
 """
 
-import json
 import pandas as pd
+import os
 from src.features.technical_indicators import (
     moving_average,
     rsi,
@@ -17,31 +17,44 @@ from src.utils.config import (
     BB_WINDOW
 )
 
-
 def load_raw_data() -> pd.DataFrame:
-    """Load raw JSON data and convert to DataFrame."""
-    with open(RAW_DATA_PATH, "r") as f:
-        raw = json.load(f)
-
-    df = pd.DataFrame(raw["Time Series (Digital Currency Monthly)"]).T
-    df.index = pd.to_datetime(df.index)
+    """Load raw CSV data and convert to DataFrame."""
+    csv_path = RAW_DATA_PATH.replace(".json", ".csv")
+    
+    # Read the CSV
+    # Row 0: Price, Close, High, Low, Open, Volume
+    # Row 1: Ticker, BTC-USD, ...
+    # Row 2: Date, (empty), ...
+    # Row 3+: Data
+    df = pd.read_csv(csv_path, skiprows=3, header=None)
+    
+    # Assign column names based on the structure we saw
+    # Column 0 is Date, 1 is Close, 2 is High, 3 is Low, 4 is Open, 5 is Volume
+    df.columns = ["date", "close", "high", "low", "open", "volume"]
+    
+    df["date"] = pd.to_datetime(df["date"])
+    df = df.set_index("date")
     df = df.sort_index()
 
-    # Use USD closing price
-    df["close"] = df["4a. close (USD)"].astype(float)
-    df["volume"] = df["5. volume"].astype(float)
+    # Convert to numeric and drop any non-numeric rows
+    df["close"] = pd.to_numeric(df["close"], errors='coerce')
+    df["volume"] = pd.to_numeric(df["volume"], errors='coerce')
+    
+    df = df.dropna(subset=["close", "volume"])
 
     return df[["close", "volume"]]
 
-
 def add_features(df: pd.DataFrame) -> pd.DataFrame:
     """Add technical indicators and time features."""
+    # Ensure data is 1D for indicators
+    close_series = df["close"]
+    
     for w in MA_WINDOWS:
-        df[f"ma_{w}"] = moving_average(df["close"], w)
+        df[f"ma_{w}"] = moving_average(close_series, w)
 
-    df["rsi"] = rsi(df["close"], RSI_WINDOW)
+    df["rsi"] = rsi(close_series, RSI_WINDOW)
 
-    bb_ma, bb_upper, bb_lower = bollinger_bands(df["close"], BB_WINDOW)
+    bb_ma, bb_upper, bb_lower = bollinger_bands(close_series, BB_WINDOW)
     df["bb_ma"] = bb_ma
     df["bb_upper"] = bb_upper
     df["bb_lower"] = bb_lower
@@ -52,17 +65,18 @@ def add_features(df: pd.DataFrame) -> pd.DataFrame:
 
     return df
 
-
 def preprocess():
     """Full preprocessing pipeline."""
     df = load_raw_data()
     df = add_features(df)
 
     df = df.dropna()
+    
+    # Ensure directory exists
+    os.makedirs(os.path.dirname(PROCESSED_DATA_PATH), exist_ok=True)
     df.to_csv(PROCESSED_DATA_PATH)
 
     print("Processed data saved to:", PROCESSED_DATA_PATH)
-
 
 if __name__ == "__main__":
     preprocess()

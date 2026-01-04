@@ -1,41 +1,42 @@
 """
-Fetch cryptocurrency data from Alpha Vantage API
-and save raw JSON data locally.
+Fetch cryptocurrency data from Yahoo Finance API
+and save raw CSV data locally.
 """
 
-import json
-import requests
+import yfinance as yf
+import pandas as pd
+import os
 from src.utils.config import (
-    ALPHA_VANTAGE_API_KEY,
     SYMBOL,
     MARKET,
     RAW_DATA_PATH
 )
 
-
 def fetch_monthly_crypto_data():
     """
-    Fetch monthly cryptocurrency price data from Alpha Vantage.
+    Fetch monthly cryptocurrency price data from Yahoo Finance.
     """
-    url = (
-        "https://www.alphavantage.co/query"
-        f"?function=DIGITAL_CURRENCY_MONTHLY"
-        f"&symbol={SYMBOL}"
-        f"&market={MARKET}"
-        f"&apikey={ALPHA_VANTAGE_API_KEY}"
-    )
+    ticker_symbol = f"{SYMBOL}-{MARKET}"
+    print(f"Fetching data for {ticker_symbol}...")
+    
+    # Fetch historical data
+    # period="max" to get all available data
+    # interval="1mo" for monthly data
+    data = yf.download(ticker_symbol, period="max", interval="1mo")
+    
+    if data.empty:
+        print("No data found.")
+        return
 
-    response = requests.get(url)
-    response.raise_for_status()
-
-    data = response.json()
-
-    # Save raw JSON
-    with open(RAW_DATA_PATH, "w") as f:
-        json.dump(data, f, indent=4)
-
-    print("Raw data saved to:", RAW_DATA_PATH)
-
+    # Ensure directory exists
+    os.makedirs(os.path.dirname(RAW_DATA_PATH), exist_ok=True)
+    
+    # Save to CSV (yfinance returns a DataFrame)
+    # We'll change the RAW_DATA_PATH to .csv in config or handle it here
+    csv_path = RAW_DATA_PATH.replace(".json", ".csv")
+    data.to_csv(csv_path)
+    
+    print("Raw data saved to:", csv_path)
 
 if __name__ == "__main__":
     fetch_monthly_crypto_data()

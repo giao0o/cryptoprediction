@@ -15,4 +15,5 @@ def plot_actual_vs_predicted(dates, actual, predicted):
     plt.xlabel("Date")
     plt.ylabel("Price (USD)")
     plt.grid(True)
-    plt.show()
+    plt.savefig("backtest_results.png")
+    print("Plot saved to backtest_results.png")

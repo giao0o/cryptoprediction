@@ -28,6 +28,6 @@ TEST_SIZE_MONTHS = 3
 # ======================
 # FEATURE CONFIGURATION
 # ======================
-MA_WINDOWS = [3, 6, 12]
-RSI_WINDOW = 14
-BB_WINDOW = 20
+MA_WINDOWS = [3, 6]
+RSI_WINDOW = 6
+BB_WINDOW = 10
