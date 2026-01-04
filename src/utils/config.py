@@ -24,6 +24,8 @@ PROCESSED_DATA_PATH = "data/processed/btc_monthly.csv"
 # ======================
 RANDOM_STATE = 42
 TEST_SIZE_MONTHS = 3
+FORECAST_MONTHS = 24
+VISUALIZATION_HISTORY_MONTHS = 60
 
 # ======================
 # FEATURE CONFIGURATION
