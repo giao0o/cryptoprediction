@@ -1,35 +1,48 @@
 """
-Global configuration file.
-Store API keys, file paths, and global parameters here.
+Global configuration file for CryptoPricePredict.
+Modify these parameters to customize your analysis.
 """
 
 import os
 
-# ======================
-# API CONFIGURATION
-# ======================
-ALPHA_VANTAGE_API_KEY = os.getenv("ALPHA_VANTAGE_API_KEY", "YOUR_API_KEY")
-
-# ======================
-# DATA CONFIGURATION
-# ======================
-SYMBOL = "BTC"
+# =============================================================================
+# 1. ASSET CONFIGURATION
+# =============================================================================
+# Change SYMBOL to any crypto ticker (e.g., "ETH", "SOL", "ADA")
+SYMBOL = "BTC" 
 MARKET = "USD"
 
-RAW_DATA_PATH = "data/raw/btc_monthly.json"
-PROCESSED_DATA_PATH = "data/processed/btc_monthly.csv"
+# =============================================================================
+# 2. FORECAST & BACKTEST CONFIGURATION
+# =============================================================================
+# How many months to predict into the future
+FORECAST_MONTHS = 24 
 
-# ======================
-# MODEL CONFIGURATION
-# ======================
+# How many recent months to use for testing the model's accuracy
+TEST_SIZE_MONTHS = 3 
+
+# How many months of history to show in the final chart
+VISUALIZATION_HISTORY_MONTHS = 60 
+
+# =============================================================================
+# 3. MODEL SELECTION
+# =============================================================================
+# Available models: "RandomForest", "LinearRegression", "XGBoost" (if installed)
+# Note: "RandomForest" is recommended for its robustness.
+MODEL_TYPE = "RandomForest" 
+
+# Seed for reproducibility
 RANDOM_STATE = 42
-TEST_SIZE_MONTHS = 3
-FORECAST_MONTHS = 24
-VISUALIZATION_HISTORY_MONTHS = 60
 
-# ======================
-# FEATURE CONFIGURATION
-# ======================
-MA_WINDOWS = [3, 6]
-RSI_WINDOW = 6
-BB_WINDOW = 10
+# =============================================================================
+# 4. FEATURE ENGINEERING (Technical Indicators)
+# =============================================================================
+MA_WINDOWS = [3, 6]  # Moving Average windows
+RSI_WINDOW = 6       # Relative Strength Index period
+BB_WINDOW = 10       # Bollinger Bands period
+
+# =============================================================================
+# 5. FILE PATHS
+# =============================================================================
+RAW_DATA_PATH = f"data/raw/{SYMBOL.lower()}_monthly.csv"
+PROCESSED_DATA_PATH = f"data/processed/{SYMBOL.lower()}_monthly.csv"

@@ -13,7 +13,7 @@ if project_root not in sys.path:
 
 from src.data.fetch_data import fetch_monthly_crypto_data
 from src.data.preprocess import preprocess
-from src.models.train_ml import train_random_forest
+from src.models.train_ml import train_model
 from src.models.predict import forecast_future
 from src.visualization.plot_results import plot_comprehensive_results
 from src.utils.config import PROCESSED_DATA_PATH
@@ -26,7 +26,7 @@ def main():
     preprocess()
 
     print("Step 3: Training model & Backtesting...")
-    model, X_test, y_test, test_preds = train_random_forest()
+    model, X_test, y_test, test_preds = train_model()
     
     # Load full processed data for visualization
     df_processed = pd.read_csv(PROCESSED_DATA_PATH, index_col=0, parse_dates=True)
