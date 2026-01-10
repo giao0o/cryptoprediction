@@ -9,7 +9,7 @@ import os
 # 1. ASSET CONFIGURATION
 # =============================================================================
 # Change SYMBOL to any crypto ticker (e.g., "ETH", "SOL", "ADA")
-SYMBOL = "BNB" 
+SYMBOL = "ETH" 
 MARKET = "USD"
 
 # =============================================================================
