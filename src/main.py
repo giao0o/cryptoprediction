@@ -43,65 +43,6 @@ def main():
         future_preds=future_preds
     )
     
-    # --- Step 6: Export Results to Excel with Professional English Comments ---
-    print("Step 6: Exporting Results to Excel...")
-
-    # 1. Handle Future Forecast Data and Generate Future Dates
-    # Ensure future_values is a 1D array even if input is a Series or higher-dim array
-    future_values = future_preds.values.flatten() if isinstance(future_preds, pd.Series) else future_preds.flatten()
-    
-    # Identify the last timestamp from the processed historical data
-    # Ensure the index is in datetime format to perform frequency-based arithmetic
-    last_date = pd.to_datetime(df_processed.index[-1])
-    
-    # Generate a range of future dates starting from the month after last_date
-    # 'ME' stands for Month End; use 'MS' if your data starts at the beginning of the month
-    future_dates = pd.date_range(start=last_date, periods=len(future_values) + 1, freq='ME')[1:]
-
-    # Create DataFrame for future predictions with explicit Date column
-    export_future_results = pd.DataFrame({
-        'Date': future_dates,
-        'Future_Forecast': future_values
-    })
-
-    # 2. Prepare Backtest Results (Test Set Performance)
-    # Align actual vs predicted values and calculate error residuals
-    actuals = y_test.values.flatten() if hasattr(y_test, 'values') else y_test
-    preds = test_preds.flatten()
-    
-    export_test_results = pd.DataFrame({
-        'Actual_Value': actuals,
-        'Predicted_Value': preds,
-        'Residual': (actuals - preds),  # Error term for residual analysis in the paper
-        'Abs_Percentage_Error': abs((actuals - preds) / actuals) # Used for MAPE calculation
-    }, index=y_test.index)
-
-    # 3. Export to Multi-Sheet Excel File
-    # Define output path relative to the project root
-    output_path = os.path.join(project_root, 'results', 'model_performance_report.xlsx')
-    os.makedirs(os.path.dirname(output_path), exist_ok=True)
-
-    with pd.ExcelWriter(output_path) as writer:
-        # Sheet 1: Detailed backtesting data with residuals for error distribution analysis
-        export_test_results.to_excel(writer, sheet_name='Backtest_Details')
-        
-        # Sheet 2: Future forecast values with corresponding timestamps
-        export_future_results.to_excel(writer, sheet_name='Future_Forecast', index=False)
-        
-        # Sheet 3: Global performance summary for the 'Results' section of the paper
-        from src.evaluation.metrics import rmse, mape, directional_accuracy
-        metrics_summary = pd.DataFrame({
-            'Metric': ['RMSE', 'MAPE', 'Directional Accuracy'],
-            'Value': [
-                f"{rmse(actuals, preds):.4f}",
-                f"{mape(actuals, preds):.2f}%",
-                f"{directional_accuracy(actuals, preds):.2%}"
-            ]
-        })
-        metrics_summary.to_excel(writer, sheet_name='Global_Metrics', index=False)
-
-    print(f"Academic report data with dates saved to: {output_path}")
-    
     # Print metrics
     from src.evaluation.metrics import rmse, mape, directional_accuracy
     print("\n--- Backtest Performance Metrics ---")

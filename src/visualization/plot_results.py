@@ -21,10 +21,11 @@ def plot_comprehensive_results(historical_data, test_actual, test_preds, future_
     plt.plot(test_actual.index, test_preds, label="Predicted Price (Backtest)", color='orange', linestyle='--', marker='o')
     
     # 3. Plot Future Forecast
-    plt.plot(future_preds.index, future_preds.values, label="Future Forecast (24m)", color='green', linestyle=':', linewidth=2)
+    plt.plot(future_preds.index, future_preds.values, label="Future Scenario Analysis (24m)", color='green', linestyle=':', linewidth=2)
     plt.fill_between(future_preds.index, future_preds.values * 0.8, future_preds.values * 1.2, color='green', alpha=0.1, label="20% Price Interval")
     
-    plt.title(f"Cryptocurrency Price Analysis: History, Backtest & Future Forecast", fontsize=14)
+    # Need Update Crypto Name and Model Name
+    plt.title(f"BNB Price Analysis: History, Backtest & Future Scenario Analysis with Linear Regression", fontsize=14)
     plt.xlabel("Date", fontsize=12)
     plt.ylabel("Price (USD)", fontsize=12)
     plt.legend(loc='upper left')
@@ -35,5 +36,6 @@ def plot_comprehensive_results(historical_data, test_actual, test_preds, future_
     plt.text(test_actual.index[-1], plt.ylim()[0], ' Future Start', color='red', verticalalignment='bottom')
 
     plt.tight_layout()
-    plt.savefig("final_forecast_results.png")
-    print("Comprehensive plot saved to final_forecast_results.png")
+    # Need Update Crpto Name and Model Name and Time Interval
+    plt.savefig("bnb_lr3_final_forecast_results.png")
+    print("Comprehensive plot saved")

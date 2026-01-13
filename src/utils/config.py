@@ -9,7 +9,7 @@ import os
 # 1. ASSET CONFIGURATION
 # =============================================================================
 # Change SYMBOL to any crypto ticker (e.g., "ETH", "BNB", "BTC")
-SYMBOL = "ETH" 
+SYMBOL = "BNB" 
 MARKET = "USD"
 
 # =============================================================================
@@ -19,7 +19,7 @@ MARKET = "USD"
 FORECAST_MONTHS = 24 
 
 # How many recent months to use for testing the model's accuracy
-TEST_SIZE_MONTHS = 3 
+TEST_SIZE_MONTHS = 3
 
 # How many months of history to show in the final chart
 VISUALIZATION_HISTORY_MONTHS = 60 
@@ -29,7 +29,7 @@ VISUALIZATION_HISTORY_MONTHS = 60
 # =============================================================================
 # Available models: "RandomForest", "LinearRegression", "XGBoost" (if installed)
 # Note: "RandomForest" is recommended for its robustness.
-MODEL_TYPE = "RandomForest" 
+MODEL_TYPE = "LinearRegression" 
 
 # Seed for reproducibility
 RANDOM_STATE = 42
