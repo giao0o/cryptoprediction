@@ -2,6 +2,8 @@
 
 This framework is designed for high flexibility, allowing you to easily swap assets, adjust forecasting horizons, and experiment with different machine learning models.
 
+![image](https://github.com/giao0o/cryptoprediction/blob/main/tree.png) 
+
 ---
 
 ## 🛠 How to Customize Your Analysis
